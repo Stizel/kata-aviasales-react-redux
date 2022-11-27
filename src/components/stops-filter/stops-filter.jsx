@@ -1,10 +1,17 @@
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import * as actions from '../../store/actions'
+import { toggleAllFilters, toggleFilters } from '../../store/actions/actions'
 
-import transfersStyl from './transfers.module.scss'
+import transfersStyl from './stops-filter.module.scss'
 
-function Transfers({ transfers, selectAll, toggleTransfers, toggleAllTransfers }) {
+export default function StopsFilter() {
+  const dispatch = useDispatch()
+  const stopsFilter = useSelector((state) => state.stopsFilter)
+  const selectAll = useSelector((state) => state.selectAll)
+
+  const onAllFiltersCheck = (payload) => dispatch(toggleAllFilters(payload))
+  const onFiltersCheck = (...payload) => dispatch(toggleFilters(...payload))
+
   const checkAll = (
     <li>
       <label htmlFor="all" className={transfersStyl.label}>
@@ -13,14 +20,14 @@ function Transfers({ transfers, selectAll, toggleTransfers, toggleAllTransfers }
           className={transfersStyl.input}
           type="checkbox"
           checked={selectAll}
-          onChange={(e) => toggleAllTransfers(e.target.checked)}
+          onChange={(e) => onAllFiltersCheck(e.target.checked)}
         />
         Все
       </label>
     </li>
   )
 
-  const transfersCheck = transfers.map((item) => {
+  const transfersCheck = stopsFilter.map((item) => {
     const { label, id, checked } = item
     return (
       <li key={id}>
@@ -30,7 +37,7 @@ function Transfers({ transfers, selectAll, toggleTransfers, toggleAllTransfers }
             className={transfersStyl.input}
             type="checkbox"
             checked={checked}
-            onChange={(e) => toggleTransfers(id, e.target.checked)}
+            onChange={(e) => onFiltersCheck(id, e.target.checked)}
           />
           {label}
         </label>
@@ -48,10 +55,3 @@ function Transfers({ transfers, selectAll, toggleTransfers, toggleAllTransfers }
     </aside>
   )
 }
-
-const mapStateToProps = (state) => ({
-  transfers: state.transfersReducer.transfers,
-  selectAll: state.transfersReducer.selectAll,
-})
-
-export default connect(mapStateToProps, actions)(Transfers)

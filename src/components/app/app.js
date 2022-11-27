@@ -1,11 +1,21 @@
-import Transfers from '../transfers/transfers'
-import Filter from '../filter/filter'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+
+import StopsFilter from '../stops-filter/stops-filter'
+import Tabs from '../tabs/tabs'
 import TicketsList from '../tickets-list/tickets-list'
 import ShowMore from '../show-more/show-more'
+import { fetchData } from '../../store/actions/ticketsActions'
 
 import app from './app.module.scss'
 
 export default function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchData())
+  }, [dispatch])
+
   const logo = './plane-logo.png'
   return (
     <div className={app.wrapper}>
@@ -13,9 +23,9 @@ export default function App() {
         <img src={logo} className={app.logo} alt="logo" />
       </header>
       <main className={app.main}>
-        <Transfers />
+        <StopsFilter />
         <section className={app.content}>
-          <Filter />
+          <Tabs />
           <TicketsList />
           <ShowMore />
         </section>
