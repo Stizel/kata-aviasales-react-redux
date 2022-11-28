@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 
 import { toggleAllFilters, toggleFilters } from '../../store/actions/actions'
 
-import transfersStyl from './stops-filter.module.scss'
+import filtersStyl from './filters.module.scss'
 
-export default function StopsFilter() {
+export default function Filters() {
   const dispatch = useDispatch()
-  const stopsFilter = useSelector((state) => state.stopsFilter)
+  const filters = useSelector((state) => state.filters)
   const selectAll = useSelector((state) => state.selectAll)
 
   const onAllFiltersCheck = (payload) => dispatch(toggleAllFilters(payload))
@@ -14,10 +15,10 @@ export default function StopsFilter() {
 
   const checkAll = (
     <li>
-      <label htmlFor="all" className={transfersStyl.label}>
+      <label htmlFor="all" className={filtersStyl.label}>
         <input
           id="all"
-          className={transfersStyl.input}
+          className={filtersStyl.input}
           type="checkbox"
           checked={selectAll}
           onChange={(e) => onAllFiltersCheck(e.target.checked)}
@@ -27,14 +28,14 @@ export default function StopsFilter() {
     </li>
   )
 
-  const transfersCheck = stopsFilter.map((item) => {
+  const filtersCheck = filters.map((item) => {
     const { label, id, checked } = item
     return (
-      <li key={id}>
-        <label htmlFor={id} className={transfersStyl.label}>
+      <li key={uuidv4()}>
+        <label htmlFor={id} className={filtersStyl.label}>
           <input
             id={id}
-            className={transfersStyl.input}
+            className={filtersStyl.input}
             type="checkbox"
             checked={checked}
             onChange={(e) => onFiltersCheck(id, e.target.checked)}
@@ -46,11 +47,11 @@ export default function StopsFilter() {
   })
 
   return (
-    <aside className={transfersStyl.wrapper}>
-      <h2 className={transfersStyl.title}>количетво пересадок</h2>
-      <ul className={transfersStyl.list}>
+    <aside className={filtersStyl.wrapper}>
+      <h2 className={filtersStyl.title}>количетво пересадок</h2>
+      <ul className={filtersStyl.list}>
         {checkAll}
-        {transfersCheck}
+        {filtersCheck}
       </ul>
     </aside>
   )

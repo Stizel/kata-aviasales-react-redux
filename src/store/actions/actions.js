@@ -4,7 +4,4 @@ export const toggleFilters = (id, isChecked) => ({ type: 'TOGGLE_FILTERS', paylo
 
 export const toggleAllFilters = (isChecked) => ({ type: 'TOGGLE_ALL_FILTERS', payload: isChecked })
 
-export const showMoreTickets = (showTickets) => ({
-  type: 'SHOW_MORE_TICKETS',
-  payload: showTickets + 5,
-})
+export const showMoreTickets = (showTickets) => ({ type: 'SHOW_MORE_TICKETS', payload: showTickets })

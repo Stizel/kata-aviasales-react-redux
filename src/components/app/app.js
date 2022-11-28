@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import LoadingBar from 'react-top-loading-bar'
 
-import StopsFilter from '../stops-filter/stops-filter'
+import Filters from '../filters/filters'
 import Tabs from '../tabs/tabs'
 import TicketsList from '../tickets-list/tickets-list'
 import ShowMore from '../show-more/show-more'
@@ -16,6 +17,10 @@ export default function App() {
     dispatch(fetchData())
   }, [dispatch])
 
+  const { tickets } = useSelector((state) => state)
+  const loading = useSelector((state) => !state.stop)
+  const progress = tickets.length / 100
+
   const logo = './plane-logo.png'
   return (
     <div className={app.wrapper}>
@@ -23,9 +28,19 @@ export default function App() {
         <img src={logo} className={app.logo} alt="logo" />
       </header>
       <main className={app.main}>
-        <StopsFilter />
+        <Filters />
         <section className={app.content}>
           <Tabs />
+          {loading ? (
+            <LoadingBar
+              progress={progress}
+              shadow={false}
+              height={10}
+              color="#2196f3"
+              containerStyle={{ position: 'relative' }}
+              className={app.loader}
+            />
+          ) : null}
           <TicketsList />
           <ShowMore />
         </section>

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 
 export const getTickets = (payload) => ({
   type: 'GET_TICKETS',
@@ -28,7 +28,7 @@ export const fetchData = () => (dispatch) => {
         return null
       })
       .catch((err) => {
-        if (err instanceof AxiosError) {
+        if (err.response.status === 500) {
           return fetchTickets(id)
         }
         return dispatch(setError(true))

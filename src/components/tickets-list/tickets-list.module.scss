@@ -5,27 +5,3 @@
   display: grid;
   gap: 20px;
 }
-
-$loader: rgba(255, 255, 255, 0.25);
-
-.loader {
-  border-radius: 3px;
-  animation: loader 3s linear infinite;
-  background-image: linear-gradient(
-    45deg,
-    $loader 25%,
-    transparent 50%,
-    transparent 50%,
-    $loader 0,
-    $loader 75%,
-    transparent 75%,
-    transparent
-  ) !important;
-  background-size: 3rem 3rem !important;
-}
-
-@keyframes loader {
-  0% {
-    background-position-x: 9rem;
-  }
-}
