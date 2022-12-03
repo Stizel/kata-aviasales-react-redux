@@ -3,12 +3,20 @@ import { useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 
 import Ticket from '../ticket/ticket'
-import { getFilteredTickets, getSortedTickets } from '../../logic/logic'
+import {
+  getFilteredTickets,
+  getSortedTickets,
+  selectFilters,
+  selectTabs,
+  selectTickets,
+} from '../../utilities/utilities'
 
 import ticketsStyl from './tickets-list.module.scss'
 
 export default function TicketsList() {
-  const { tickets, showTickets, filters, tabs, error } = useSelector((state) => state)
+  const { tickets, showTickets, error, connection } = useSelector(selectTickets)
+  const { filters } = useSelector(selectFilters)
+  const { tabs } = useSelector(selectTabs)
 
   const checkedFilters = filters.filter((item) => item.checked)
   const filteredTickets = getFilteredTickets(checkedFilters, tickets)
@@ -33,5 +41,17 @@ export default function TicketsList() {
     ticketItems
   )
 
-  return <ul className={ticketsStyl.list}>{content}</ul>
+  return (
+    <>
+      {!connection && (
+        <Alert
+          message="Соединение с интернетом пропало"
+          description="Проверьте интернет кабель и перезагрузите страницу"
+          type="error"
+          showIcon
+        />
+      )}
+      <ul className={ticketsStyl.list}>{content}</ul>
+    </>
+  )
 }

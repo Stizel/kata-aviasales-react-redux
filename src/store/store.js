@@ -1,9 +1,17 @@
-import { applyMiddleware, legacy_createStore as createStore } from 'redux'
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import reducer from './reducer'
+import ticketsReducer from './ticketsReducer'
+import tabsReducer from './tabsReducer'
+import filtersReducer from './filtersReducer'
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+const rootReducer = combineReducers({
+  tickets: ticketsReducer,
+  tabs: tabsReducer,
+  filters: filtersReducer,
+})
+
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 export default store

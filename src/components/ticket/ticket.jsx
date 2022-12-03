@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { getSegmentInfo } from '../../logic/logic'
+import { getSegmentInfo } from '../../utilities/utilities'
 
 import ticketStyl from './ticket.module.scss'
 

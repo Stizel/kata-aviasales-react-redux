@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 
 import { setTab } from '../../store/actions/actions'
+import { selectTabs } from '../../utilities/utilities'
 
 import tabsStyl from './tabs.module.scss'
 
 export default function Tabs() {
   const dispatch = useDispatch()
-  const tabs = useSelector((state) => state.tabs)
+  const { tabs } = useSelector(selectTabs)
 
   const onTabClick = (...args) => dispatch(setTab(...args))
 

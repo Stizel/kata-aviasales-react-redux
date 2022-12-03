@@ -7,6 +7,7 @@ import Tabs from '../tabs/tabs'
 import TicketsList from '../tickets-list/tickets-list'
 import ShowMore from '../show-more/show-more'
 import { fetchData } from '../../store/actions/ticketsActions'
+import { selectLoading, selectTickets } from '../../utilities/utilities'
 
 import app from './app.module.scss'
 
@@ -15,10 +16,10 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchData())
-  }, [dispatch])
+  }, [])
 
-  const { tickets } = useSelector((state) => state)
-  const loading = useSelector((state) => !state.stop)
+  const { tickets } = useSelector(selectTickets)
+  const loading = useSelector(selectLoading)
   const progress = tickets.length / 100
 
   const logo = './plane-logo.png'

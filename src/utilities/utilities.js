@@ -65,3 +65,8 @@ export const getSortedTickets = (activeTabb, tickets) => {
   }
   return tickets
 }
+
+export const selectFilters = (state) => state.filters
+export const selectTabs = (state) => state.tabs
+export const selectTickets = (state) => state.tickets
+export const selectLoading = (state) => !state.tickets.stop

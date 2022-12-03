@@ -13,6 +13,10 @@ export const setError = (payload) => ({
   type: 'SET_ERROR',
   payload,
 })
+export const setConnection = (payload) => ({
+  type: 'SET_CONNECTION',
+  payload,
+})
 
 export const fetchData = () => (dispatch) => {
   const fetchTickets = (id) =>
@@ -23,15 +27,20 @@ export const fetchData = () => (dispatch) => {
           dispatch(getTickets(data.tickets))
           fetchTickets(id)
         } else {
-          return dispatch(setStop(data.stop))
+          dispatch(setStop(data.stop))
         }
         return null
       })
       .catch((err) => {
+        if (err.code === 'ERR_NETWORK') {
+          dispatch(setStop(true))
+          return dispatch(setConnection(false))
+        }
         if (err.response.status === 500) {
           return fetchTickets(id)
         }
-        return dispatch(setError(true))
+        dispatch(setError(true))
+        return null
       })
 
   const getSearchId = () =>
