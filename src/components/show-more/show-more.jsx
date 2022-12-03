@@ -6,7 +6,8 @@ import showMore from './show-more.module.scss'
 
 export default function ShowMore() {
   const dispatch = useDispatch()
-  const showTickets = useSelector((state) => state.showTickets)
+  const selectShowTickets = (state) => state.tickets.showTickets
+  const showTickets = useSelector(selectShowTickets)
 
   const showMoreClick = (payload) => dispatch(showMoreTickets(payload + 5))
 
